@@ -72,8 +72,6 @@ class Lab:
         tweets.loc[tweets.sentiment_compound_polarity <
                    0, 'sentiment_type'] = 'NEGATIVE'
 
-
-        print(tweets.groupby(['sentiment_type'])['sentiment_neutral'].count())
         #PLot
         tweets_sentiment = tweets.groupby(['sentiment_type'])['sentiment_neutral'].count()
         tweets_sentiment.rename("",inplace=True)
@@ -82,3 +80,4 @@ class Lab:
         plt.title('TRUMP', bbox={'facecolor':'0.8', 'pad':0})
         plt.show()
 
+        return(tweets.groupby(['sentiment_type'])['sentiment_neutral'].count())

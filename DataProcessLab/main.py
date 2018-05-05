@@ -11,10 +11,10 @@ def main():
     tweets = pd.read_csv(
         '/home/gabs/Backend/Backend/DataProcessLab/sentiments /inputs/result.csv', encoding="ISO-8859-1")
 
-    print(tweets['text'][0])
     tweets = lab.cleanData(tweets)
-    print(tweets['text'][0])
-    lab.sentimentAnalysis(tweets)
+    result = lab.sentimentAnalysis(tweets)
+    print('nltk result')
+    print(result)
 
     #FOR use textblob
     analysis = source.analysis('Trump', 100)
