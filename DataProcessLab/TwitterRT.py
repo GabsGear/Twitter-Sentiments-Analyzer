@@ -1,4 +1,5 @@
 
+
 from textblob import TextBlob as tb
 import tweepy
 import numpy as np
@@ -38,7 +39,7 @@ class AnalyzerTwiterRT():
 
             # Write a row to the CSV file. I use encode UTF-8
             csvWriter.writerow([tweet.text.encode('utf-8')])
-            #print (tweet.created_at, tweet.text)
+            print (tweet.created_at, tweet.text)
         csvFile.close()
 
     #search tweets for textblob
@@ -51,10 +52,16 @@ class AnalyzerTwiterRT():
         public_tweets = self.search(keyword, nItens)
         analysis = None
         result = []
+        positive = negative = neutral = 0
         for tw in public_tweets:
             analysis = tb(tw.text)
-            if(analysis.sentiment.polarity != 0.0):
-                result.append(analysis.sentiment.polarity)
+            result.append(analysis.sentiment.polarity)
+            if(analysis.sentiment.polarity > 0):
+                positive += 1
+            if(analysis.sentiment.polarity == 0):
+                neutral += 1
+            else:
+                negative += 1
 
         average = np.mean(result)
-        return average
+        return average, positive, negative, neutral

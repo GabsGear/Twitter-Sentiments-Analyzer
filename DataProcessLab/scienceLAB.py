@@ -50,9 +50,8 @@ class Lab:
             '[^A-Za-z]', ' ', line)) for line in lists]).strip() for lists in tweets['text']]
 
         #transform to a tf-idf matriz
-        vectorizer = TfidfVectorizer(
-            max_df=0.5, max_features=10000, min_df=10, stop_words='english', use_idf=True)
-
+        vectorizer = TfidfVectorizer(max_df=0.5,max_features=10000,min_df=10,stop_words='english',use_idf=True)
+        X = vectorizer.fit_transform(tweets['text_lem'].str.upper())
         sid = SentimentIntensityAnalyzer()
 
         tweets['sentiment_compound_polarity'] = tweets.text_lem.apply(
@@ -77,7 +76,9 @@ class Lab:
         tweets_sentiment.rename("",inplace=True)
         plt.subplot(221)
         tweets_sentiment.transpose().plot(kind='barh',figsize=(20, 20))
-        plt.title('TRUMP', bbox={'facecolor':'0.8', 'pad':0})
+        plt.title('Infinite War', bbox={'facecolor':'0.8', 'pad':0})
         plt.show()
-
         return(tweets.groupby(['sentiment_type'])['sentiment_neutral'].count())
+
+    def getNormalRate(self, result, info, nTweets):
+        return result['POSITIVE']/nTweets
